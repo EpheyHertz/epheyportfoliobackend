@@ -22,6 +22,5 @@ app.include_router(delete_router, prefix="/portfolio/delete", tags=["Delete"])
 @app.get("/",tags=['Welcome'])
 def read_root():
     return {"message": "Welcome to my portfolio backend!"}
-if __name__ == "__main__":
-    uvicorn.run(app="main:app", host="localhost", port=8000, reload=True)
+
 
