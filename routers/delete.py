@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from app.database import db
-from app.models import Project, Skill, Education, Review
+from database import db
+from helpers.models import Project, Skill, Education, Review
 from uuid import UUID
 from bson import Binary
 

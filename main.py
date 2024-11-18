@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
-from app.routers.portfolio import router as portfolio_router
-from app.routers.delete import router as delete_router
+from routers.portfolio import router as portfolio_router
+from routers.delete import router as delete_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()

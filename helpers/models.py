@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from uuid import UUID, uuid4
-from app.database import db
+from database import db
 
 
 

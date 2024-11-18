@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException, File, UploadFile,Form
-from app.database import db
-from app.models import Project, Skill, Education, Review
+from database import db
+from helpers.models import Project, Skill, Education, Review
 from bson import Binary, ObjectId
 from typing import List, Optional
 from uuid import uuid4, UUID
 import uuid
-from app.upload import upload_image  # Ensure this function is async if it involves I/O
+from helpers.upload import upload_image  # Ensure this function is async if it involves I/O
 
 router = APIRouter()
 
