@@ -12,13 +12,16 @@ def convert_str_to_uuid(str_id: str) -> UUID:
         return UUID(str_id)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid ID format")
+    
+def convert_uuid_to_bson(uuid_obj: UUID) -> Binary:
+    return Binary.from_uuid(uuid_obj)
+
 
 # Delete a project by UUID
 @router.delete("/projects/{project_id}", response_model=Project)
-async def delete_project(project_id: str):
-    project_uuid = convert_str_to_uuid(project_id)
-    result = db.projects.delete_one({"id": project_uuid})  # Assuming UUID is stored in the 'id' field
-    
+async def delete_project(project_id: UUID):
+   
+    result = await db.projects.delete_one({"id": convert_uuid_to_bson(project_id)})  # Assuming UUID is stored in the 'id' field
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Project not found")
     
@@ -28,7 +31,7 @@ async def delete_project(project_id: str):
 @router.delete("/skills/{skill_id}", response_model=Skill)
 async def delete_skill(skill_id: str):
     skill_uuid = convert_str_to_uuid(skill_id)
-    result = db.skills.delete_one({"id": skill_uuid})  # Assuming UUID is stored in the 'id' field
+    result = await db.skills.delete_one({"id": convert_uuid_to_bson(skill_uuid)})  # Assuming UUID is stored in the 'id' field
     
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Skill not found")
@@ -39,7 +42,7 @@ async def delete_skill(skill_id: str):
 @router.delete("/education/{education_id}", response_model=Education)
 async def delete_education(education_id: str):
     education_uuid = convert_str_to_uuid(education_id)
-    result = db.education.delete_one({"id": education_uuid})  # Assuming UUID is stored in the 'id' field
+    result = await db.education.delete_one({"id": convert_uuid_to_bson(education_uuid)})  # Assuming UUID is stored in the 'id' field
     
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Education entry not found")
@@ -49,8 +52,8 @@ async def delete_education(education_id: str):
 # Delete a review by UUID
 @router.delete("/reviews/{review_id}", response_model=Review)
 async def delete_review(review_id: str):
-    review_uuid = convert_str_to_uuid(review_id)
-    result = db.reviews.delete_one({"id": review_uuid})  # Assuming UUID is stored in the 'id' field
+    
+    result = await db.reviews.delete_one({"id":convert_uuid_to_bson(review_id)})  # Assuming UUID is stored in the 'id' field
     
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Review not found")
